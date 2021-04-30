@@ -2,7 +2,8 @@ class ApiClient {
 
     static SERVER_URL = 'http://localhost:8080'
     static GET_CHALLENGE = '/challenges/random'
-    static POST_RESULT = '/attempts'
+    static ATTEMPTS = '/attempts'
+    static BY_ALIAS = '?alias='
 
     static challenge(): Promise<Response> {
         return fetch(ApiClient.SERVER_URL + ApiClient.GET_CHALLENGE)
@@ -12,7 +13,7 @@ class ApiClient {
                      a: number,
                      b: number,
                      guess: number): Promise<Response> {
-        return fetch(ApiClient.SERVER_URL + ApiClient.POST_RESULT,
+        return fetch(ApiClient.SERVER_URL + ApiClient.ATTEMPTS,
             {
                 method: 'POST',
                 headers: {
@@ -27,6 +28,10 @@ class ApiClient {
                     }
                 )
             })
+    }
+
+    static getLast10Attempts(userAlias: string): Promise<Response> {
+        return fetch(ApiClient.SERVER_URL + ApiClient.ATTEMPTS + ApiClient.BY_ALIAS + userAlias)
     }
 }
 
