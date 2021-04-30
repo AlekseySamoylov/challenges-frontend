@@ -81,7 +81,7 @@ class ChallengeComponent extends React.Component<Props, State> {
                         } else {
                             this.updateMessage("Oops! Your guess " + json.resultAttempt + " is wrong, but keep playing!")
                         }
-                        this.updateLastAttempts(this.state.user)
+                        this.updateLastAttempts()
                         this.refreshChallenge()
                     })
                 } else {
@@ -91,11 +91,14 @@ class ChallengeComponent extends React.Component<Props, State> {
     }
 
     refreshChallenge() {
+        this.setState({
+            guess: ""
+        })
         this.componentDidMount()
     }
 
 
-    updateLastAttempts(userAlias: string) {
+    updateLastAttempts() {
         ApiClient.getLast10Attempts(this.state.user)
             .then(res => {
                 if (res.ok) {
